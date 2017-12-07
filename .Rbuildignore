@@ -1,2 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^tmp-tests$
+^example-file\.png$
+^\.travis\.yml$
+^appveyor\.yml$
