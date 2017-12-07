@@ -4,3 +4,4 @@
 ^example-file\.png$
 ^\.travis\.yml$
 ^appveyor\.yml$
+^code_of_conduct\.md$
