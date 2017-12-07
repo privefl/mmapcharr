@@ -10,7 +10,6 @@ Memory-map text files of characters.
 
 ## Installation
 
-
 ```r
 # For the CRAN version
 ## Coming soon!
@@ -25,9 +24,30 @@ As inputs, package **mmapcharr** uses text files of characters separated by anot
 Lines should be the same so that the file can be viewed as a matrix.
 Files should end up with an empty line. 
 
+For now, only digits characters are supported. If you want to access matrices of letters, feel free to ask for this feature. Note that you can already access letters as integers by playing with the `code` parameter.
+
 ![An example of supported file](example-file.png)
 
 You can access files in such shape the same way as for R(cpp) matrices.
+
+## Example code
+
+```r
+test_file <- system.file("testdata/test-windows.txt", package = "mmapcharr")
+readLines(test_file)
+
+# Create the memory-mapping object based on the text file
+test <- digimat(test_file, code = mmapcharr:::CODE_012)
+test[]
+test[, 1:3]
+
+# Change the code of the accessed integers
+test$code <- rep(5L, 256)
+test[, 1:3]
+
+# Underlying characters
+rawToChar(as.raw(0:255), multiple = TRUE)
+```
 
 
 ## Bug report / Help

@@ -58,7 +58,7 @@ digimat_RC <- methods::setRefClass(
     }
   )
 )
-digimat_RC$lock("nrow", "ncol", "nextra", "code")
+digimat_RC$lock("backingfile", "nrow", "ncol", "nextra")
 
 ################################################################################
 
