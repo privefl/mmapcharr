@@ -40,6 +40,8 @@ digimat_RC <- methods::setRefClass(
   methods = list(
     initialize = function(file, code) {
       
+      if (length(code) != 256) stop2("Parameter 'code' must be of length 256.")
+      
       d <- dim_file(file)
       
       .self$backingfile <- file

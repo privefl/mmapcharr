@@ -53,4 +53,17 @@ private:
   size_t l;
 };
 
+
+class charSepAccTranspose : public charSepAcc {
+public:
+  charSepAccTranspose(const charSep * charSepPtr) : charSepAcc(charSepPtr) {}
+  
+  size_t nrow() const { return charSepAcc::ncol(); }
+  size_t ncol() const { return charSepAcc::nrow(); }
+  
+  inline const unsigned char operator() (size_t i, size_t j) {
+    return charSepAcc::operator()(j, i);
+  }
+};
+
 #endif // CHAR_SEP_ACC_H
