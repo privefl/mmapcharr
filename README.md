@@ -41,14 +41,18 @@ readLines(test_file)
 # Create the memory-mapping object based on the text file
 test <- mmapchar(test_file, code = mmapcharr:::CODE_012)
 test[]
-test[, 1:3]
-
-# Change the code of the accessed integers
-test2 <- test$copy(code = rep("A", 256))
-test2[, 1:3]
+test[, 1:10]
 
 # Underlying characters
-rawToChar(as.raw(0:255), multiple = TRUE)
+(CHAR256 <- rawToChar(as.raw(0:255), multiple = TRUE))
+
+# Change the code to access true characters
+test2 <- test$copy(code = CHAR256)
+test2[, 1:10]
+
+# Change the code to access logicals (why not?)
+test3 <- test$copy(code = rep(c(TRUE, FALSE), 256 / 2))
+test3[, 1:10]
 ```
 
 

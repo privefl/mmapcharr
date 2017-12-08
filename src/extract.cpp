@@ -21,8 +21,8 @@ Vector<RTYPE> extractVec(charSepAcc<T, RTYPE> macc,
 }
 
 #define EXTRACT_VEC(CTYPE, RTYPE) {                                            \
-  return extractVec<CTYPE, RTYPE>(charSepAcc<CTYPE, RTYPE>(xpMat, e["code"]),  \
-                                  elemInd);                                    \
+return extractVec<CTYPE, RTYPE>(charSepAcc<CTYPE, RTYPE>(xpMat, e["code"]),    \
+                                elemInd);                                      \
 }
 
 // Dispatch function for extractVec
@@ -33,12 +33,16 @@ RObject extractVec(Environment e,
   XPtr<charSep> xpMat = e["address"];
   
   switch(TYPEOF(e["code"])) {
-  case RAWSXP:
-    EXTRACT_VEC(unsigned char, RAWSXP)
   case INTSXP:
     EXTRACT_VEC(int,           INTSXP)
   case REALSXP:
     EXTRACT_VEC(double,        REALSXP)
+  case RAWSXP:
+    EXTRACT_VEC(unsigned char, RAWSXP)
+  case STRSXP:
+    EXTRACT_VEC(String,        STRSXP)
+  case LGLSXP:
+    EXTRACT_VEC(bool,          LGLSXP)
   default:
     throw Rcpp::exception("Type not supported.");
   }
@@ -67,8 +71,8 @@ Matrix<RTYPE> extractMat(charSepAcc<T, RTYPE> macc,
 }
 
 #define EXTRACT_MAT(CTYPE, RTYPE) {                                            \
-  return extractMat<CTYPE, RTYPE>(charSepAcc<CTYPE, RTYPE>(xpMat, e["code"]),  \
-                                  rowInd, colInd);                             \
+return extractMat<CTYPE, RTYPE>(charSepAcc<CTYPE, RTYPE>(xpMat, e["code"]),    \
+                                rowInd, colInd);                               \
 }
 
 // Dispatch function for extractMat
@@ -77,19 +81,19 @@ RObject extractMat(Environment e,
                    const IntegerVector& rowInd,
                    const IntegerVector& colInd) {
   
-  Rcout << "OK1" << std::endl; 
-  
   XPtr<charSep> xpMat = e["address"];
   
-  Rcout << "OK2" << std::endl; 
-  
   switch(TYPEOF(e["code"])) {
-  case RAWSXP:
-    EXTRACT_MAT(unsigned char, RAWSXP)
   case INTSXP:
     EXTRACT_MAT(int,           INTSXP)
   case REALSXP:
     EXTRACT_MAT(double,        REALSXP)
+  case RAWSXP:
+    EXTRACT_MAT(unsigned char, RAWSXP)
+  case STRSXP:
+    EXTRACT_MAT(String,        STRSXP)
+  case LGLSXP:
+    EXTRACT_MAT(bool,          LGLSXP)
   default:
     throw Rcpp::exception("Type not supported.");
   }
