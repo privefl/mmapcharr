@@ -25,6 +25,7 @@ Vector<RTYPE> extractVec(charSepAcc<T, RTYPE> macc,
                                   elemInd);                                    \
 }
 
+// Dispatch function for extractVec
 // [[Rcpp::export]]
 RObject extractVec(Environment e,
                    const IntegerMatrix& elemInd) {
@@ -70,6 +71,7 @@ Matrix<RTYPE> extractMat(charSepAcc<T, RTYPE> macc,
                                   rowInd, colInd);                             \
 }
 
+// Dispatch function for extractMat
 // [[Rcpp::export]]
 RObject extractMat(Environment e,
                    const IntegerVector& rowInd,
