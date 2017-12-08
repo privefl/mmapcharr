@@ -33,17 +33,19 @@ You can access files in such shape the same way as for R(cpp) matrices.
 ## Example code
 
 ```r
+library(mmapcharr)
+
 test_file <- system.file("testdata/test-windows.txt", package = "mmapcharr")
 readLines(test_file)
 
 # Create the memory-mapping object based on the text file
-test <- digimat(test_file, code = mmapcharr:::CODE_012)
+test <- mmapchar(test_file, code = mmapcharr:::CODE_012)
 test[]
 test[, 1:3]
 
 # Change the code of the accessed integers
-test$code <- rep(5L, 256)
-test[, 1:3]
+test2 <- test$copy(code = rep("A", 256))
+test2[, 1:3]
 
 # Underlying characters
 rawToChar(as.raw(0:255), multiple = TRUE)

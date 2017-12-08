@@ -22,7 +22,7 @@ BugReports: https://github.com/privefl/mmapcharr/issues
 Collate: 
     'RcppExports.R'
     'extract.R'
-    'digimat.R'
     'file-dim.R'
+    'mmapchar.R'
     'mmapcharr-package.r'
     'utils.R'

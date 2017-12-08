@@ -5,20 +5,12 @@ charSepXPtr <- function(path, n, m, r) {
     .Call(`_mmapcharr_charSepXPtr`, path, n, m, r)
 }
 
-decodeMat <- function(source, code) {
-    .Call(`_mmapcharr_decodeMat`, source, code)
+extractVec <- function(e, elemInd) {
+    .Call(`_mmapcharr_extractVec`, e, elemInd)
 }
 
-decodeVec <- function(source, code) {
-    .Call(`_mmapcharr_decodeVec`, source, code)
-}
-
-extractVec <- function(obj, elemInd) {
-    .Call(`_mmapcharr_extractVec`, obj, elemInd)
-}
-
-extractMat <- function(obj, rowInd, colInd) {
-    .Call(`_mmapcharr_extractMat`, obj, rowInd, colInd)
+extractMat <- function(e, rowInd, colInd) {
+    .Call(`_mmapcharr_extractMat`, e, rowInd, colInd)
 }
 
 nline_cpp <- function(obj) {

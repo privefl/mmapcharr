@@ -64,17 +64,14 @@ Extract <- function(extract_vector, extract_matrix) {
         if (!is.matrix(i))
           stop2("Vector subsetting is not allowed")
         
-        return(decodeVec(extract_vector(x, i), x$code))
+        return(extract_vector(x, i))
       }
       
     }
     
     if (nargs == 3) {
       
-      res <- decodeMat(
-        extract_matrix(x, transform_ind(i, n), transform_ind(j, m)),
-        x$code
-      )
+      res <- extract_matrix(x, transform_ind(i, n), transform_ind(j, m))
       
       return(`if`(drop, drop(res), res))
       

@@ -19,52 +19,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// decodeMat
-IntegerMatrix decodeMat(const RawMatrix& source, const IntegerVector& code);
-RcppExport SEXP _mmapcharr_decodeMat(SEXP sourceSEXP, SEXP codeSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const RawMatrix& >::type source(sourceSEXP);
-    Rcpp::traits::input_parameter< const IntegerVector& >::type code(codeSEXP);
-    rcpp_result_gen = Rcpp::wrap(decodeMat(source, code));
-    return rcpp_result_gen;
-END_RCPP
-}
-// decodeVec
-IntegerVector decodeVec(const RawVector& source, const IntegerVector& code);
-RcppExport SEXP _mmapcharr_decodeVec(SEXP sourceSEXP, SEXP codeSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const RawVector& >::type source(sourceSEXP);
-    Rcpp::traits::input_parameter< const IntegerVector& >::type code(codeSEXP);
-    rcpp_result_gen = Rcpp::wrap(decodeVec(source, code));
-    return rcpp_result_gen;
-END_RCPP
-}
 // extractVec
-RawVector extractVec(RObject obj, const IntegerMatrix& elemInd);
-RcppExport SEXP _mmapcharr_extractVec(SEXP objSEXP, SEXP elemIndSEXP) {
+RObject extractVec(Environment e, const IntegerMatrix& elemInd);
+RcppExport SEXP _mmapcharr_extractVec(SEXP eSEXP, SEXP elemIndSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< RObject >::type obj(objSEXP);
+    Rcpp::traits::input_parameter< Environment >::type e(eSEXP);
     Rcpp::traits::input_parameter< const IntegerMatrix& >::type elemInd(elemIndSEXP);
-    rcpp_result_gen = Rcpp::wrap(extractVec(obj, elemInd));
+    rcpp_result_gen = Rcpp::wrap(extractVec(e, elemInd));
     return rcpp_result_gen;
 END_RCPP
 }
 // extractMat
-RawMatrix extractMat(RObject obj, const IntegerVector& rowInd, const IntegerVector& colInd);
-RcppExport SEXP _mmapcharr_extractMat(SEXP objSEXP, SEXP rowIndSEXP, SEXP colIndSEXP) {
+RObject extractMat(Environment e, const IntegerVector& rowInd, const IntegerVector& colInd);
+RcppExport SEXP _mmapcharr_extractMat(SEXP eSEXP, SEXP rowIndSEXP, SEXP colIndSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< RObject >::type obj(objSEXP);
+    Rcpp::traits::input_parameter< Environment >::type e(eSEXP);
     Rcpp::traits::input_parameter< const IntegerVector& >::type rowInd(rowIndSEXP);
     Rcpp::traits::input_parameter< const IntegerVector& >::type colInd(colIndSEXP);
-    rcpp_result_gen = Rcpp::wrap(extractMat(obj, rowInd, colInd));
+    rcpp_result_gen = Rcpp::wrap(extractMat(e, rowInd, colInd));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -82,8 +58,6 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_mmapcharr_charSepXPtr", (DL_FUNC) &_mmapcharr_charSepXPtr, 4},
-    {"_mmapcharr_decodeMat", (DL_FUNC) &_mmapcharr_decodeMat, 2},
-    {"_mmapcharr_decodeVec", (DL_FUNC) &_mmapcharr_decodeVec, 2},
     {"_mmapcharr_extractVec", (DL_FUNC) &_mmapcharr_extractVec, 2},
     {"_mmapcharr_extractMat", (DL_FUNC) &_mmapcharr_extractMat, 3},
     {"_mmapcharr_nline_cpp", (DL_FUNC) &_mmapcharr_nline_cpp, 1},

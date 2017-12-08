@@ -5,7 +5,7 @@ context("FBM_ACCESSORS")
 ################################################################################
 
 test_file <- system.file("testdata/geno3pops.lfmm", package = "mmapcharr")
-X <- digimat(test_file, code = mmapcharr:::CODE_012)
+X <- mmapchar(test_file, code = mmapcharr:::CODE_012)
 x <- as.matrix(read.table(test_file)); dimnames(x) <- NULL
 
 ################################################################################

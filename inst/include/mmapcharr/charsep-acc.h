@@ -29,21 +29,23 @@ private:
 };
 
 
+template <typename T, int RTYPE>
 class charSepAcc {
 public:
-  charSepAcc(const charSep * charSepPtr) {
+  charSepAcc(const charSep * charSepPtr, Vector<RTYPE> code) {
     
+    _pMat = charSepPtr->matrix();
     n = charSepPtr->nrow();
     m = charSepPtr->ncol();
-    l = 2 * m - 1 + charSepPtr->nextra();
-    _pMat = charSepPtr->matrix();
+    l = (2 * m - 1) + charSepPtr->nextra();
+    _code = code;
   };
   
   size_t nrow() const { return n; }
   size_t ncol() const { return m; }
   
-  inline const unsigned char operator() (size_t i, size_t j) {
-    return _pMat[i * l + 2 * j];
+  inline T operator() (size_t i, size_t j) {
+    return _code[_pMat[i * l + 2 * j]];
   }
   
 private:
@@ -51,18 +53,21 @@ private:
   size_t n;
   size_t m;
   size_t l;
+  Vector<RTYPE> _code;
 };
 
 
-class charSepAccTranspose : public charSepAcc {
+template <typename T, int RTYPE>
+class charSepAccTranspose : public charSepAcc<T, RTYPE> {
 public:
-  charSepAccTranspose(const charSep * charSepPtr) : charSepAcc(charSepPtr) {}
+  charSepAccTranspose(const charSep * charSepPtr, Vector<RTYPE> code) 
+    : charSepAcc<T, RTYPE>(charSepPtr, code) {}
   
-  size_t nrow() const { return charSepAcc::ncol(); }
-  size_t ncol() const { return charSepAcc::nrow(); }
+  size_t nrow() const { return charSepAcc<T, RTYPE>::ncol(); }
+  size_t ncol() const { return charSepAcc<T, RTYPE>::nrow(); }
   
   inline const unsigned char operator() (size_t i, size_t j) {
-    return charSepAcc::operator()(j, i);
+    return charSepAcc<T, RTYPE>::operator()(j, i);
   }
 };
 

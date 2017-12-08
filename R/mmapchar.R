@@ -1,22 +1,22 @@
 ################################################################################
 
-#' Class digimat
+#' Class mmapchar
 #'
 #' A reference class for storing and accessing matrix-like data stored on disk 
 #' in files containing only characters (digits) separated by a character.
 #'
 #' @examples
 #' test_file <- system.file("testdata/test-windows.txt", package = "mmapcharr")
-#' test <- digimat(test_file, code = mmapcharr:::CODE_012)
+#' test <- mmapchar(test_file, code = mmapcharr:::CODE_012)
 #' test[, 1:3]
 #' test[]
 #' readLines(test_file)
 #' 
-#' @exportClass digimat
+#' @exportClass mmapchar
 #'
-digimat_RC <- methods::setRefClass(
+mmapchar_RC <- methods::setRefClass(
   
-  "digimat",
+  "mmapchar",
   
   fields = list(
     extptr = "externalptr",
@@ -24,7 +24,7 @@ digimat_RC <- methods::setRefClass(
     ncol = "integer",
     nextra = "integer",
     backingfile = "character",
-    code = "integer",
+    code = "vector",
     
     address = function() {
       if (identical(.self$extptr, new("externalptr"))) { # nil
@@ -38,11 +38,9 @@ digimat_RC <- methods::setRefClass(
   ),
   
   methods = list(
-    initialize = function(file, code) {
+    initialize = function(file, d, code) {
       
       if (length(code) != 256) stop2("Parameter 'code' must be of length 256.")
-      
-      d <- dim_file(file)
       
       .self$backingfile <- file
       .self$nrow        <- d[["nrow"]]
@@ -53,46 +51,55 @@ digimat_RC <- methods::setRefClass(
       .self$address  # connect once
     },
     
+    dim = function() {
+      c(nrow = .self$nrow, ncol = .self$ncol, nextra = .self$nextra)
+    },
+    
+    copy = function(code = .self$code) {
+      new(Class = "mmapchar", file = .self$backingfile, d = .self$dim(), 
+          code = code)
+    },
+    
     show = function() {
-      cat(sprintf("A digimat with %d rows and %d columns.",
+      cat(sprintf("A mmapchar with %d rows and %d columns.",
                   .self$nrow, .self$ncol))
       invisible(.self)
     }
   )
 )
-digimat_RC$lock("backingfile", "nrow", "ncol", "nextra")
+mmapchar_RC$lock("backingfile", "nrow", "ncol", "nextra")
 
 ################################################################################
 
-#' Wrapper constructor for class `digimat`.
+#' Wrapper constructor for class `mmapchar`.
 #'
 #' @param file Path of the file.
 #' @param code Integer vector of size 256 to access integers instead of
 #'   `rawToChar(as.raw(0:255), multiple = TRUE)`. 
 #'   See `mmapcharr:::CODE_012` and `mmapcharr:::CODE_DIGITS`.
 #'
-#' @rdname digimat-class
+#' @rdname mmapchar-class
 #'
 #' @export
 #'
-digimat <- function(file, code) {
-  new(Class = "digimat", file = file, code = code)
+mmapchar <- function(file, code) {
+  new(Class = "mmapchar", file = file, d = dim_file(file), code = code)
 }
 
 ################################################################################
 
-#' Methods for the digimat class
+#' Methods for the mmapchar class
 #'
-#' @name digimat-methods
+#' @name mmapchar-methods
 #'
-#' @rdname digimat-methods
+#' @rdname mmapchar-methods
 NULL
 
-#' Accessor methods for class `digimat`. You can use positive and negative indices,
+#' Accessor methods for class `mmapchar`. You can use positive and negative indices,
 #' logical indices (that are recycled) and also a matrix of indices (but only
 #' positive ones).
 #'
-#' @param x A [digimat][digimat-class] object.
+#' @param x A [mmapchar][mmapchar-class] object.
 #' @param i A vector of indices (or nothing). You can use positive and negative
 #'   indices, logical indices (that are recycled) and also a matrix of indices
 #'   (but only positive ones).
@@ -102,30 +109,27 @@ NULL
 #' @param drop Whether to delete the dimensions of a matrix which have
 #'   one dimension equals to 1.
 #'
-#' @rdname digimat-methods
+#' @rdname mmapchar-methods
 #'
 #' @include extract.R
 #'
 #' @export
 #'
 setMethod(
-  '[', signature(x = "digimat"),
-  Extract(
-    extract_vector = function(x, i) extractVec(x$address, i),
-    extract_matrix = function(x, i, j) extractMat(x$address, i, j)
-  )
+  '[', signature(x = "mmapchar"),
+  Extract(extract_vector = extractVec, extract_matrix = extractMat)
 )
 
 ################################################################################
 
-#' Dimension and type methods for class `digimat`.
+#' Dimension and type methods for class `mmapchar`.
 #'
-#' @rdname digimat-methods
+#' @rdname mmapchar-methods
 #' @export
-setMethod("dim",    signature(x = "digimat"), function(x) c(x$nrow, x$ncol))
+setMethod("dim",    signature(x = "mmapchar"), function(x) c(x$nrow, x$ncol))
 
-#' @rdname digimat-methods
+#' @rdname mmapchar-methods
 #' @export
-setMethod("length", signature(x = "digimat"), function(x) prod(dim(x)))
+setMethod("length", signature(x = "mmapchar"), function(x) prod(dim(x)))
 
 ################################################################################

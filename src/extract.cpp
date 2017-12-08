@@ -7,15 +7,12 @@ using std::size_t;
 
 /******************************************************************************/
 
-// [[Rcpp::export]]
-RawVector extractVec(RObject obj, 
-                     const IntegerMatrix& elemInd) {
-  
-  XPtr<charSep> xpMat(obj);
-  charSepAcc macc(xpMat);
+template <typename T, int RTYPE>
+Vector<RTYPE> extractVec(charSepAcc<T, RTYPE> macc, 
+                         const IntegerMatrix& elemInd) {
   
   size_t K = elemInd.nrow();
-  RawVector res(K);
+  Vector<RTYPE> res(K);
   
   for (size_t k = 0; k < K; k++)
     res[k] = macc(elemInd(k, 0) - 1, elemInd(k, 1) - 1);
@@ -23,15 +20,35 @@ RawVector extractVec(RObject obj,
   return res;
 }
 
-/******************************************************************************/
+#define EXTRACT_VEC(CTYPE, RTYPE) {                                            \
+  return extractVec<CTYPE, RTYPE>(charSepAcc<CTYPE, RTYPE>(xpMat, e["code"]),  \
+                                  elemInd);                                    \
+}
 
 // [[Rcpp::export]]
-RawMatrix extractMat(RObject obj,
-                     const IntegerVector& rowInd,
-                     const IntegerVector& colInd) {
+RObject extractVec(Environment e,
+                   const IntegerMatrix& elemInd) {
   
-  XPtr<charSep> xpMat(obj);
-  charSepAcc macc(xpMat);
+  XPtr<charSep> xpMat = e["address"];
+  
+  switch(TYPEOF(e["code"])) {
+  case RAWSXP:
+    EXTRACT_VEC(unsigned char, RAWSXP)
+  case INTSXP:
+    EXTRACT_VEC(int,           INTSXP)
+  case REALSXP:
+    EXTRACT_VEC(double,        REALSXP)
+  default:
+    throw Rcpp::exception("Type not supported.");
+  }
+}
+
+/******************************************************************************/
+
+template <typename T, int RTYPE>
+Matrix<RTYPE> extractMat(charSepAcc<T, RTYPE> macc,
+                         const IntegerVector& rowInd,
+                         const IntegerVector& colInd) {
   
   size_t n = rowInd.size();
   size_t m = colInd.size();
@@ -39,13 +56,41 @@ RawMatrix extractMat(RObject obj,
   IntegerVector rows = rowInd - 1;
   IntegerVector cols = colInd - 1;
   
-  RawMatrix res(n, m);
+  Matrix<RTYPE> res(n, m);
   
   for (size_t i = 0; i < n; i++)
     for (size_t j = 0; j < m; j++)
       res(i, j) = macc(rows[i], cols[j]);
   
   return res;
+}
+
+#define EXTRACT_MAT(CTYPE, RTYPE) {                                            \
+  return extractMat<CTYPE, RTYPE>(charSepAcc<CTYPE, RTYPE>(xpMat, e["code"]),  \
+                                  rowInd, colInd);                             \
+}
+
+// [[Rcpp::export]]
+RObject extractMat(Environment e,
+                   const IntegerVector& rowInd,
+                   const IntegerVector& colInd) {
+  
+  Rcout << "OK1" << std::endl; 
+  
+  XPtr<charSep> xpMat = e["address"];
+  
+  Rcout << "OK2" << std::endl; 
+  
+  switch(TYPEOF(e["code"])) {
+  case RAWSXP:
+    EXTRACT_MAT(unsigned char, RAWSXP)
+  case INTSXP:
+    EXTRACT_MAT(int,           INTSXP)
+  case REALSXP:
+    EXTRACT_MAT(double,        REALSXP)
+  default:
+    throw Rcpp::exception("Type not supported.");
+  }
 }
 
 /******************************************************************************/
