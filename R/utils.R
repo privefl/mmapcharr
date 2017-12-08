@@ -6,10 +6,8 @@ ERROR_DIM   <- "Error when guessing the dimensions of the file."
 
 ################################################################################
 
-CODE_012 <- rep(NA_integer_, 256); CODE_012[49:51] <- 0:2
-CODE_DIGITS <- suppressWarnings(as.integer(
-  rawToChar(as.raw(0:255), multiple = TRUE)
-))
+CODE_012    <- rep(NA_integer_, 256); CODE_012[49:51]    <- 0:2
+CODE_DIGITS <- rep(NA_integer_, 256); CODE_DIGITS[49:58] <- 0:9
 
 ################################################################################
 
