@@ -6,3 +6,5 @@
 ^appveyor\.yml$
 ^code_of_conduct\.md$
 ^example\.R$
+^cran-comments\.md$
+^README\.md$

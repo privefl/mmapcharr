@@ -26,7 +26,7 @@ Files should end up with an empty line.
 
 For now, only digits characters are supported. If you want to access matrices of letters, feel free to ask for this feature. Note that you can already access letters as integers by playing with the `code` parameter.
 
-![An example of supported file](example-file.png)
+![An example of supported file](https://raw.githubusercontent.com/privefl/mmapcharr/master/example-file.png)
 
 You can access files in such shape the same way as for R(cpp) matrices.
 
