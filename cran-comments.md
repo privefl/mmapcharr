@@ -1,3 +1,5 @@
+This is a resubmission. I've elaborated the description a bit.
+
 ## Test environments
 
 * local Linux (CentOS 7), R 3.4.1

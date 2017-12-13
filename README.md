@@ -12,7 +12,7 @@ Memory-map text files of characters.
 
 ```r
 # For the CRAN version
-## Coming soon!
+install.packages("mmapcharr")
 
 # For the current development version
 devtools::install_github("privefl/mmapcharr")

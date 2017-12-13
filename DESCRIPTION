@@ -1,12 +1,14 @@
 Package: mmapcharr
-Title: Memory-Map Characters Files 
+Title: Memory-Map Character Files 
 Version: 0.1.0
 Date: 2017-12-07
 Authors@R:
   person("Florian", "Privé", 
          email = "florian.prive.21@gmail.com", 
          role = c("aut", "cre"))
-Description: Memory-map text files of characters as R matrices.
+Description: Uses memory-mapping to enable the random access of elements of
+  a text file of characters separated by characters as if it were a simple
+  R(cpp) matrix.
 Encoding: UTF-8
 License: GPL-3
 LazyData: TRUE
