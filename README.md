@@ -24,7 +24,7 @@ As inputs, package **mmapcharr** uses text files of characters separated by anot
 Lines should be the same so that the file can be viewed as a matrix.
 Files should end up with an empty line. 
 
-For now, only digits characters are supported. If you want to access matrices of letters, feel free to ask for this feature. Note that you can already access letters as integers by playing with the `code` parameter.
+You can play with the `code` parameter to access whatever you want instead of characters (see the example code below).
 
 ![An example of supported file](https://raw.githubusercontent.com/privefl/mmapcharr/master/example-file.png)
 
