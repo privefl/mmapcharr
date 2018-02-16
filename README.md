@@ -59,9 +59,3 @@ test3[, 1:10]
 ## Bug report / Help
 
 Please open an issue if you find a bug.
-
-
-## Code of conduct
-
-Please note that this project is released with a [Contributor Code of Conduct](https://github.com/privefl/mmapcharr/blob/master/code_of_conduct.md). 
-By participating in this project you agree to abide by its terms.
