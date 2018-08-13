@@ -12,6 +12,7 @@
 #include <cstdarg>
 #include <boost/cstdint.hpp>
 #include <boost/winapi/config.hpp>
+#include <boost/winapi/basic_types.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
