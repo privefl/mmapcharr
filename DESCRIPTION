@@ -1,7 +1,7 @@
 Package: mmapcharr
 Title: Memory-Map Character Files 
-Version: 0.1.0
-Date: 2017-12-07
+Version: 0.2.0
+Date: 2018-08-13
 Authors@R:
   person("Florian", "Privé", 
          email = "florian.prive.21@gmail.com", 
@@ -13,11 +13,11 @@ Encoding: UTF-8
 License: GPL-3
 LazyData: TRUE
 ByteCompile: TRUE
-Depends: R (>= 3.3.2)
+Depends: R (>= 3.3.0)
 Imports: methods, Rcpp
-LinkingTo: BH, Rcpp
+LinkingTo: Rcpp
 Suggests: covr, testthat
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/privefl/mmapcharr
 BugReports: https://github.com/privefl/mmapcharr/issues

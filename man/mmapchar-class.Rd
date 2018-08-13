@@ -19,8 +19,6 @@ See \code{mmapcharr:::CODE_012} and \code{mmapcharr:::CODE_DIGITS}.}
 \description{
 A reference class for storing and accessing matrix-like data stored on disk
 in files containing only characters (digits) separated by a character.
-
-Wrapper constructor for class \code{mmapchar}.
 }
 
 \examples{
