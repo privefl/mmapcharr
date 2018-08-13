@@ -103,10 +103,10 @@
 #if defined(BOOST_GCC)
 #  if (BOOST_GCC >= 40600)
 #     pragma GCC diagnostic push
-#     if (BOOST_GCC >= 40800)
-#        pragma GCC diagnostic ignored "-Wpedantic"
+#     if (BOOST_GCC >= 60000)
+// #        pragma GCC diagnostic ignored "-Wpedantic"
 #     else
-#        pragma GCC diagnostic ignored "-pedantic"
+// #        pragma GCC diagnostic ignored "-pedantic"
 #     endif
 #  else
 #     pragma GCC system_header
@@ -139,7 +139,7 @@ struct decimal
 {
     unsigned short wReserved;
     union {
-        struct {
+        BOOST_WINAPI_DETAIL_EXTENSION struct {
             unsigned char scale;
             unsigned char sign;
         };
@@ -147,7 +147,7 @@ struct decimal
     };
     unsigned long Hi32;
     union {
-        struct {
+        BOOST_WINAPI_DETAIL_EXTENSION struct {
             unsigned long Lo32;
             unsigned long Mid32;
         };
@@ -162,7 +162,7 @@ struct wchar_variant
 {
    union
    {
-      struct
+      BOOST_WINAPI_DETAIL_EXTENSION struct
       {
          unsigned short vt;
          unsigned short wReserved1;
@@ -171,7 +171,7 @@ struct wchar_variant
          union
          {
             bstr bstrVal;
-            struct
+            BOOST_WINAPI_DETAIL_EXTENSION struct
             {
                void* pvRecord;
                void* pRecInfo;
