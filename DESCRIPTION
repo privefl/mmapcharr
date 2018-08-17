@@ -15,7 +15,7 @@ LazyData: TRUE
 ByteCompile: TRUE
 Depends: R (>= 3.3.0)
 Imports: methods, Rcpp
-LinkingTo: Rcpp
+LinkingTo: Rcpp, BH
 Suggests: covr, testthat
 RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
