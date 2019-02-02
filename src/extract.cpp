@@ -42,7 +42,7 @@ RObject extractVec(Environment e,
   case STRSXP:
     EXTRACT_VEC(String,        STRSXP)
   case LGLSXP:
-    EXTRACT_VEC(bool,          LGLSXP)
+    EXTRACT_VEC(int,           LGLSXP)
   default:
     throw Rcpp::exception("Type not supported.");
   }
@@ -93,7 +93,7 @@ RObject extractMat(Environment e,
   case STRSXP:
     EXTRACT_MAT(String,        STRSXP)
   case LGLSXP:
-    EXTRACT_MAT(bool,          LGLSXP)
+    EXTRACT_MAT(int,           LGLSXP)
   default:
     throw Rcpp::exception("Type not supported.");
   }
