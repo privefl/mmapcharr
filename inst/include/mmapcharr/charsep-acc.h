@@ -1,31 +1,32 @@
 #ifndef CHAR_SEP_ACC_H
 #define CHAR_SEP_ACC_H
 
-#include <boost/interprocess/file_mapping.hpp>
-#include <boost/interprocess/mapped_region.hpp>
-#include <boost/noncopyable.hpp>
 #include <Rcpp.h>
+#include <mio/mmap.hpp>
+#include <system_error> // for std::error_code
 
-using namespace boost::interprocess;
 using namespace Rcpp;
 using std::size_t;
 
-class charSep : private boost::noncopyable {
+class charSep {
 public:
-  charSep(const std::string path, int n, int m, int r);
+  charSep(const std::string path, int n, int m, int r): n(n), m(m), r(r) {
+    std::error_code error;
+    this->ro_mmap.map(path, error);
+    if (error) Rcpp::stop("Error mapping file: %s, exiting..\n", error.message());
+  }
   
-  const unsigned char* matrix() const { return file_data; }
-  size_t nrow() const { return n; }
-  size_t ncol() const { return m; }
+  const unsigned char* matrix() const {
+    return reinterpret_cast<const unsigned char*>(ro_mmap.data());
+  }
+  
+  size_t nrow()   const { return n; }
+  size_t ncol()   const { return m; }
   size_t nextra() const { return r; }
   
 private:
-  boost::interprocess::file_mapping file;
-  boost::interprocess::mapped_region file_region;
-  const unsigned char* file_data;
-  size_t n;
-  size_t m;
-  size_t r;
+  mio::mmap_source ro_mmap;
+  size_t n, m, r;
 };
 
 

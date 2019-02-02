@@ -6,12 +6,12 @@
 using namespace Rcpp;
 
 // charSepXPtr
-SEXP charSepXPtr(std::string path, int n, int m, int r);
+SEXP charSepXPtr(const std::string path, int n, int m, int r);
 RcppExport SEXP _mmapcharr_charSepXPtr(SEXP pathSEXP, SEXP nSEXP, SEXP mSEXP, SEXP rSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string >::type path(pathSEXP);
+    Rcpp::traits::input_parameter< const std::string >::type path(pathSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< int >::type m(mSEXP);
     Rcpp::traits::input_parameter< int >::type r(rSEXP);

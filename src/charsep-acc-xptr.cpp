@@ -2,25 +2,13 @@
 
 #include <mmapcharr/charsep-acc.h>
 
-/******************************************************************************/
-
-charSep::charSep(std::string path, int n, int m, int r) : n(n), m(m), r(r) {
-  
-  try {
-    this->file = file_mapping(path.c_str(), read_only);
-  } catch(interprocess_exception& e) {
-    throw std::runtime_error("File not found.");
-  }
-  
-  this->file_region = mapped_region(this->file, read_only);
-  this->file_data = 
-    static_cast<const unsigned char*>(this->file_region.get_address());
-}
+// Enable C++11 via this plugin (Rcpp 0.10.3 or later)
+// [[Rcpp::plugins(cpp11)]]
 
 /******************************************************************************/
 
 // [[Rcpp::export]]
-SEXP charSepXPtr(std::string path, int n, int m, int r) {
+SEXP charSepXPtr(const std::string path, int n, int m, int r) {
   
   // http://gallery.rcpp.org/articles/intro-to-exceptions/
   try {
