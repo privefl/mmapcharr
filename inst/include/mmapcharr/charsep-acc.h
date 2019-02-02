@@ -13,7 +13,7 @@ public:
   charSep(const std::string path, int n, int m, int r): n(n), m(m), r(r) {
     std::error_code error;
     this->ro_mmap.map(path, error);
-    if (error) Rcpp::stop("Error mapping file: %s, exiting..\n", error.message());
+    if (error) Rcpp::stop("Error when mapping file:\n  %s.\n", error.message());
   }
   
   const unsigned char* matrix() const {
