@@ -1,11 +1,10 @@
 #ifndef CHAR_SEP_ACC_H
 #define CHAR_SEP_ACC_H
 
-#include <Rcpp.h>
 #include <mio/mmap.hpp>
 #include <system_error> // for std::error_code
+#include <Rcpp.h>
 
-using namespace Rcpp;
 using std::size_t;
 
 class charSep {
@@ -33,7 +32,7 @@ private:
 template <typename T, int RTYPE>
 class charSepAcc {
 public:
-  charSepAcc(const charSep * charSepPtr, Vector<RTYPE> code) {
+  charSepAcc(const charSep * charSepPtr, Rcpp::Vector<RTYPE> code) {
     
     _pMat = charSepPtr->matrix();
     n = charSepPtr->nrow();
@@ -54,14 +53,14 @@ private:
   size_t n;
   size_t m;
   size_t l;
-  Vector<RTYPE> _code;
+  Rcpp::Vector<RTYPE> _code;
 };
 
 
 template <typename T, int RTYPE>
 class charSepAccTranspose : public charSepAcc<T, RTYPE> {
 public:
-  charSepAccTranspose(const charSep * charSepPtr, Vector<RTYPE> code) 
+  charSepAccTranspose(const charSep * charSepPtr, Rcpp::Vector<RTYPE> code) 
     : charSepAcc<T, RTYPE>(charSepPtr, code) {}
   
   size_t nrow() const { return charSepAcc<T, RTYPE>::ncol(); }
