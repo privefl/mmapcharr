@@ -16,7 +16,6 @@ ByteCompile: TRUE
 Depends: R (>= 3.3.0)
 Imports: methods, Rcpp
 LinkingTo: Rcpp, rmio
-Remotes: privefl/rmio
 Suggests: covr, testthat
 RoxygenNote: 6.1.0.9000
 Roxygen: list(markdown = TRUE)
